@@ -1,4 +1,4 @@
-import { Database, getDatabase, ref, set, get, remove } from "firebase/database";
+import { getFirestore, doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
 
 interface FirebaseResult<T = void> {
   success: boolean;
@@ -6,21 +6,22 @@ interface FirebaseResult<T = void> {
   error?: unknown;
 }
 
-const db = getDatabase();
-const addData = async <T>(database: Database, path: string, data: T): Promise<FirebaseResult> => {
+const db = getFirestore();
+
+const addData = async <T extends Record<string, unknown>>(path: string, data: T): Promise<FirebaseResult> => {
   try {
-    await set(ref(database, path), data);
+    await setDoc(doc(db, path), data);
     return { success: true };
   } catch (error) {
     return { success: false, error };
   }
 };
 
-const getData = async <T>(database: Database, path: string): Promise<FirebaseResult<T>> => {
+const getData = async <T>(path: string): Promise<FirebaseResult<T>> => {
   try {
-    const snapshot = await get(ref(database, path));
-    if (snapshot.exists()) {
-      return { success: true, data: snapshot.val() };
+    const docSnap = await getDoc(doc(db, path));
+    if (docSnap.exists()) {
+      return { success: true, data: docSnap.data() as T };
     } else {
       return { success: false, data: null };
     }
@@ -29,13 +30,13 @@ const getData = async <T>(database: Database, path: string): Promise<FirebaseRes
   }
 };
 
-const deleteData = async (database: Database, path: string): Promise<FirebaseResult> => {
+const deleteData = async (path: string): Promise<FirebaseResult> => {
   try {
-    await remove(ref(database, path));
+    await deleteDoc(doc(db, path));
     return { success: true };
   } catch (error) {
     return { success: false, error };
   }
 };
 
-export { addData, getData, deleteData ,db };
+export { addData, getData, deleteData, db };
