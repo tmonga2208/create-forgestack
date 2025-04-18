@@ -1,6 +1,7 @@
 <p align="left">
-  <img src="forgestack.png" alt="ForgeStack Logo" width="40" />
+  <img src="forgestack.png" alt="ForgeStack Logo" width="100" />
 </p>
+
 # ForgeStack
 
 ForgeStack is a fullstack template powered by **Next.js**, **Firebase**, and **Tailwind CSS**. It helps you quickly scaffold scalable web apps with built-in theming and Firebase integration.
