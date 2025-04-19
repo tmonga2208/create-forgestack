@@ -1,6 +1,6 @@
 {
   "name": "create-forgestack",
-  "version": "1.3.2",
+  "version": "1.3.4",
   "description": "CLI to scaffold a Next.js + Firebase project",
   "type": "module",
   "bin": {

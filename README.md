@@ -1,67 +1,56 @@
 # ForgeStack
 
-ForgeStack is a **fullstack template** powered by **Next.js, Firebase, and Tailwind CSS** to help you kickstart your web development projects with ease.
+ForgeStack is a fullstack template powered by **Next.js**, **Firebase**, and **Tailwind CSS**. It helps you quickly scaffold scalable web apps with built-in theming and Firebase integration.
 
-## 🚀 Features
+## Features
 
-- 🔥 **Next.js** - The React framework for production.
-- ⚡ **Firebase** - Realtime database, authentication, and storage.
-- 🎨 **Tailwind CSS** - Utility-first styling framework.
-- 🌑 **Dark Mode Support** - Built-in light/dark theme toggle.
-- 📦 **Pre-configured Hooks** - Custom Firebase hooks for seamless integration.
+- Next.js (App Router)
+- Firebase Auth, Realtime DB, and Storage
+- Tailwind CSS with dark mode support
+- Custom hooks for Firebase services
+- Clean, scalable project structure
 
-## 📦 Installation
+## Getting Started
 
-To create a new project using ForgeStack, run:
+Create a new project:
 
-```sh
+```bash
 npx create-forgestack my-app
-```
-
-Then navigate into your project directory:
-
-```sh
 cd my-app
 ```
 
-## 🛠 Setup Firebase
+## Set up Firebase
 
-After creating the project, you’ll be prompted to enter your Firebase configuration. Ensure you have a Firebase project set up and retrieve your API keys from the Firebase Console.
+Go to the Firebase Console.
 
-## 🚀 Running the Project
+Create a project and copy the config keys.
 
-To start the development server, run:
+Add them to .env.local:
 
-```sh
+env
+
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=...
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+NEXT_PUBLIC_FIREBASE_APP_ID=...
+```
+
+Run the dev server:
+
+bash
+
+```
 npm run dev
 ```
 
-This will launch your app at `http://localhost:3000`.
-
-## 📂 Project Structure
-
-```
-my-app/
-│── public/         # Static assets
-│── src/
-│   ├── components/ # Reusable UI components
-│   ├── hooks/      # Custom Firebase hooks
-│   ├── pages/      # Next.js pages
-│   ├── styles/     # Global styles
-│   ├── utils/      # Utility functions
-│── .env.local      # Firebase credentials
-│── package.json    # Dependencies & scripts
-```
-
-## 🎨 Theming
-
-ForgeStack supports **light/dark mode** out of the box. You can customize the theme in `src/styles/globals.css`.
-
-## 📜 License
+## License
 
 This project is open-source and available under the **MIT License**.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Feel free to fork the repo, submit issues, or make a pull request.
 

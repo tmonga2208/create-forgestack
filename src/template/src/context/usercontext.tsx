@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import { getData } from '@/hooks/useDB';
 
 interface User {
   uid: string;
@@ -21,10 +22,17 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser: FirebaseUser | null) => {
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser: FirebaseUser | null) => {
       if (firebaseUser) {
-        const { uid, email, displayName, photoURL } = firebaseUser;
-        setUser({ uid, email, displayName, photoURL });
+        const userData = await getData<User>(`users/${firebaseUser.uid}`);
+        setUser(
+          {
+            uid: userData?.data?.uid ?? firebaseUser.uid,
+            email: userData?.data?.email ?? firebaseUser.email,
+            displayName: userData?.data?.displayName ?? "",
+            photoURL: userData?.data?.photoURL ?? "",
+          }
+        );
       } else {
         setUser(null);
       }
