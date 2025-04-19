@@ -20,7 +20,6 @@ export async function createProject(projectName: string) {
     const extractedFolder = path.join(projectPath, "create-forgestack-main", "src", "template");
     fs.copySync(extractedFolder, projectPath);
 
-    // Cleanup unnecessary files
     fs.removeSync(path.join(projectPath, "create-forgestack-main"));
 
     console.log(chalk.green("\n✅ Project setup complete! Run the following:\n"));

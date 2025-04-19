@@ -1,4 +1,5 @@
-import { getFirestore, doc, setDoc, getDoc, deleteDoc } from "firebase/firestore";
+import {collection, doc, setDoc, getDoc, deleteDoc, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 interface FirebaseResult<T = void> {
   success: boolean;
@@ -6,12 +7,22 @@ interface FirebaseResult<T = void> {
   error?: unknown;
 }
 
-const db = getFirestore();
 
-const addData = async <T extends Record<string, unknown>>(path: string, data: T): Promise<FirebaseResult> => {
+const addData = async <T extends Record<string, unknown>>(collectionPath: string, data: T): Promise<FirebaseResult> => {
   try {
-    await setDoc(doc(db, path), data);
+    const newDocRef = doc(collection(db, collectionPath)); 
+    await setDoc(newDocRef, data);
     return { success: true };
+  } catch (error) {
+    return { success: false, error };
+  }
+};
+
+const getCollection = async <T>(collectionPath: string): Promise<FirebaseResult<T[]>> => {
+  try {
+    const querySnapshot = await getDocs(collection(db, collectionPath));
+    const data: T[] = querySnapshot.docs.map(doc => doc.data() as T);
+    return { success: true, data };
   } catch (error) {
     return { success: false, error };
   }
@@ -39,4 +50,4 @@ const deleteData = async (path: string): Promise<FirebaseResult> => {
   }
 };
 
-export { addData, getData, deleteData, db };
+export { addData, getData, deleteData, db,getCollection };
