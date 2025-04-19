@@ -1,3 +1,7 @@
+<p align="left">
+  <img src="forgestack.png" alt="ForgeStack Logo" width="100" />
+</p>
+
 # ForgeStack
 
 ForgeStack is a fullstack template powered by **Next.js**, **Firebase**, and **Tailwind CSS**. It helps you quickly scaffold scalable web apps with built-in theming and Firebase integration.
@@ -19,34 +23,40 @@ npx create-forgestack my-app
 cd my-app
 ```
 
-## Set up Firebase
+## 🛠 Setup Firebase
 
-Go to the Firebase Console.
+After creating the project, you’ll be prompted to enter your Firebase configuration. Ensure you have a Firebase project set up and retrieve your API keys from the Firebase Console.
 
-Create a project and copy the config keys.
+## 🚀 Running the Project
 
-Add them to .env.local:
+To start the development server, run:
 
-env
-
-```
-NEXT_PUBLIC_FIREBASE_API_KEY=...
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=...
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=...
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=...
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
-NEXT_PUBLIC_FIREBASE_APP_ID=...
-```
-
-Run the dev server:
-
-bash
-
-```
+```sh
 npm run dev
 ```
 
-## License
+This will launch your app at `http://localhost:3000`.
+
+## 📂 Project Structure
+
+```
+my-app/
+│── public/         # Static assets
+│── src/
+│   ├── components/ # Reusable UI components
+│   ├── hooks/      # Custom Firebase hooks
+│   ├── pages/      # Next.js pages
+│   ├── styles/     # Global styles
+│   ├── utils/      # Utility functions
+│── .env.local      # Firebase credentials
+│── package.json    # Dependencies & scripts
+```
+
+## 🎨 Theming
+
+ForgeStack supports **light/dark mode** out of the box. You can customize the theme in `src/styles/globals.css`.
+
+## 📜 License
 
 This project is open-source and available under the **MIT License**.
 
