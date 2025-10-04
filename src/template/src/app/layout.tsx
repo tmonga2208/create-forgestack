@@ -4,6 +4,7 @@ import { Anton } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../context/theme-context";
 import { UserProvider } from "../context/usercontext";
+import { ImageProvider } from "@/context/imagekitContext";
 
 const antonFont = Anton({
   variable: "--font-anton",
@@ -26,16 +27,18 @@ export default function RootLayout({
       <body
         className={`${antonFont.variable} antialiased`}
       >
-      <ThemeProvider
-         attribute="class"
-         defaultTheme="system"
-         enableSystem
-         disableTransitionOnChange
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
           <UserProvider>
-            {children}
-            </UserProvider>
-          </ThemeProvider>
+            <ImageProvider>
+              {children}
+            </ImageProvider>
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
