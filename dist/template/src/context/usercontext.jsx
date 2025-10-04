@@ -2,14 +2,20 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import { getData } from '../hooks/useDB';
 const UserContext = createContext(undefined);
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if (firebaseUser) {
-                const { uid, email, displayName, photoURL } = firebaseUser;
-                setUser({ uid, email, displayName, photoURL });
+                const userData = await getData(`users/${firebaseUser.uid}`);
+                setUser({
+                    uid: userData?.data?.uid ?? firebaseUser.uid,
+                    email: userData?.data?.email ?? firebaseUser.email,
+                    displayName: userData?.data?.displayName ?? "",
+                    photoURL: userData?.data?.photoURL ?? "",
+                });
             }
             else {
                 setUser(null);

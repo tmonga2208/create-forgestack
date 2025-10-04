@@ -6,14 +6,19 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { handleSignIn, handleGoogleAuth, handleSignUp } from "../hooks/useAuth";
+import { addData } from "../hooks/useDB";
+import { getAuth } from "firebase/auth";
+import { getFileURL, storage, uploadFile } from "../hooks/useStorage";
 export default function AuthDialog() {
     const [loginEmail, setLoginEmail] = useState("");
     const [loginPassword, setLoginPassword] = useState("");
     const [signupEmail, setSignupEmail] = useState("");
     const [signupPassword, setSignupPassword] = useState("");
     const [signupConfirmPassword, setSignupConfirmPassword] = useState("");
-    const [photoURL, setPhotoURL] = useState("");
+    const [signupphotoURL, setSignupPhotoURL] = useState(null);
     const [open, setOpen] = useState(false);
+    const [name, setName] = useState("");
+    const auth = getAuth();
     const handleLoginSubmit = async (e) => {
         e.preventDefault();
         handleSignIn(loginEmail, loginPassword);
@@ -21,14 +26,28 @@ export default function AuthDialog() {
     };
     const handleSignupSubmit = async (e) => {
         e.preventDefault();
-        if (signupPassword === signupConfirmPassword) {
-            try {
-                await handleSignUp(signupEmail, signupPassword);
-                setOpen(false);
+        if (signupPassword !== signupConfirmPassword)
+            return;
+        try {
+            await handleSignUp(signupEmail, signupPassword);
+            const updatedUser = auth.currentUser;
+            if (!updatedUser)
+                return;
+            let newURL = "";
+            if (signupphotoURL) {
+                await uploadFile(storage, `users/${updatedUser.uid}`, signupphotoURL);
+                const fileURLResult = await getFileURL(storage, `users/${updatedUser.uid}`);
+                newURL = fileURLResult.data || "";
             }
-            catch (error) {
-                console.error(error);
-            }
+            await addData(`users/${updatedUser.uid}`, {
+                email: signupEmail,
+                photoURL: newURL || "",
+                displayName: name,
+            });
+            setOpen(false);
+        }
+        catch (error) {
+            console.error("Signup error:", error);
         }
     };
     return (<Dialog open={open} onOpenChange={setOpen}>
@@ -83,11 +102,7 @@ export default function AuthDialog() {
               </Button>
 
               <div className="text-center text-sm">
-                <Button variant="link" className="p-0 h-auto font-normal" onClick={() => {
-            const forgotPasswordLink = document.querySelector('[data-value="forgot-password"]');
-            if (forgotPasswordLink)
-                forgotPasswordLink.click();
-        }}>
+                <Button variant="link" className="p-0 h-auto font-normal">
                   Forgot password?
                 </Button>
               </div>
@@ -97,6 +112,8 @@ export default function AuthDialog() {
           <TabsContent value="signup" className="space-y-4 py-4">
             <form onSubmit={handleSignupSubmit} className="space-y-4">
               <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input id="name" type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} required/>
                 <Label htmlFor="signup-email">Email</Label>
                 <Input id="signup-email" type="email" placeholder="your@email.com" value={signupEmail} onChange={(e) => setSignupEmail(e.target.value)} required/>
               </div>
@@ -109,7 +126,7 @@ export default function AuthDialog() {
                 <Input id="signup-confirm-password" type="password" placeholder="********" value={signupConfirmPassword} onChange={(e) => setSignupConfirmPassword(e.target.value)} required/>
                 <div className="space-y-2">
                   <Label htmlFor="photoURL">Profile Pic</Label>
-                  <Input id="photoURL" type="file" onChange={(e) => setPhotoURL(e.target.value)}/>
+                  <Input id="photoURL" type="file" onChange={(e) => setSignupPhotoURL(e.target.files?.[0] || null)}/>
                 </div>
                 {signupPassword !== signupConfirmPassword && signupConfirmPassword && (<p className="text-sm text-red-500">Passwords do not match</p>)}
               </div>

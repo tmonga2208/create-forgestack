@@ -36,7 +36,7 @@ export default function Home() {
                 <Link href="/docs">View Documentation</Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href="https://github.com/yourusername/forgestack" target="_blank" rel="noopener noreferrer">
+                <Link href="https://github.com/tmonga2208/create-forgestack" target="_blank" rel="noopener noreferrer">
                   <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 2C6.477 2 2 6.477 2 12C2 16.418 4.865 20.166 8.84 21.49C9.34 21.581 9.52 21.272 9.52 21.008C9.52 20.768 9.512 20.058 9.508 19.192C6.726 19.8 6.14 17.782 6.14 17.782C5.684 16.642 5.026 16.334 5.026 16.334C4.132 15.728 5.096 15.74 5.096 15.74C6.084 15.81 6.62 16.758 6.62 16.758C7.5 18.266 8.976 17.83 9.54 17.574C9.63 16.928 9.89 16.492 10.17 16.244C7.96 15.996 5.64 15.152 5.64 11.344C5.64 10.228 6.046 9.314 6.64 8.596C6.54 8.342 6.18 7.406 6.74 6.07C6.74 6.07 7.56 5.806 9.5 7.074C10.3 6.858 11.15 6.75 12 6.746C12.85 6.75 13.7 6.858 14.5 7.074C16.44 5.806 17.26 6.07 17.26 6.07C17.82 7.406 17.46 8.342 17.36 8.596C17.954 9.314 18.36 10.228 18.36 11.344C18.36 15.162 16.036 15.992 13.82 16.236C14.16 16.534 14.48 17.142 14.48 18.062C14.48 19.358 14.46 20.674 14.46 21.008C14.46 21.274 14.64 21.586 15.146 21.49C19.119 20.162 22 16.416 22 12C22 6.477 17.523 2 12 2Z" fill="currentColor"/>
                   </svg>
@@ -132,7 +132,7 @@ export default function Home() {
       <footer className="border-t bg-muted/40">
         <div className="container px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-full"></div>
+            <div className="w-8 h-8 rounded-full"><Image src="/logo.png" width={40} height={40} alt='logo'/></div>
             <span className="font-semibold">ForgeStack</span>
           </div>
           
@@ -141,14 +141,8 @@ export default function Home() {
           </p>
           
           <div className="flex items-center gap-6">
-            <Link href="/docs" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="https://forgestack-docs.vercel.app/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Documentation
-            </Link>
-            <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              About
-            </Link>
-            <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Contact
             </Link>
           </div>
         </div>

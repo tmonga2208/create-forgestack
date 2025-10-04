@@ -2,6 +2,7 @@ import { Anton } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../context/theme-context";
 import { UserProvider } from "../context/usercontext";
+import { ImageProvider } from "../context/imagekitContext";
 const antonFont = Anton({
     variable: "--font-anton",
     subsets: ["latin"],
@@ -14,11 +15,13 @@ export const metadata = {
 export default function RootLayout({ children, }) {
     return (<html lang="en" suppressHydrationWarning>
       <body className={`${antonFont.variable} antialiased`}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <UserProvider>
-            {children}
-            </UserProvider>
-          </ThemeProvider>
+            <ImageProvider>
+              {children}
+            </ImageProvider>
+          </UserProvider>
+        </ThemeProvider>
       </body>
     </html>);
 }

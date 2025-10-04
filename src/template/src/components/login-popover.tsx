@@ -12,9 +12,9 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { handleSignIn, handleGoogleAuth, handleSignUp } from "../hooks/useAuth";
-import { addData } from "@/hooks/useDB";
+import { addData } from "../hooks/useDB";
 import { getAuth } from "firebase/auth";
-import { getFileURL, storage, uploadFile } from "@/hooks/useStorage";
+import { getFileURL, storage, uploadFile } from "../hooks/useStorage";
 
 export default function AuthDialog() {
   const [loginEmail, setLoginEmail] = useState("");
@@ -35,32 +35,32 @@ export default function AuthDialog() {
   };
 
   const handleSignupSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  if (signupPassword !== signupConfirmPassword) return;
+    e.preventDefault();
+    if (signupPassword !== signupConfirmPassword) return;
 
-  try {
-    await handleSignUp(signupEmail, signupPassword);
-    const updatedUser = auth.currentUser;
-    if (!updatedUser) return;
+    try {
+      await handleSignUp(signupEmail, signupPassword);
+      const updatedUser = auth.currentUser;
+      if (!updatedUser) return;
 
-    let newURL = "";
-    if (signupphotoURL) {
-      await uploadFile(storage, `users/${updatedUser.uid}`, signupphotoURL);
-      const fileURLResult = await getFileURL(storage, `users/${updatedUser.uid}`);
-      newURL = fileURLResult.data || "";
+      let newURL = "";
+      if (signupphotoURL) {
+        await uploadFile(storage, `users/${updatedUser.uid}`, signupphotoURL);
+        const fileURLResult = await getFileURL(storage, `users/${updatedUser.uid}`);
+        newURL = fileURLResult.data || "";
+      }
+
+      await addData(`users/${updatedUser.uid}`, {
+        email: signupEmail,
+        photoURL: newURL || "",
+        displayName: name,
+      });
+
+      setOpen(false);
+    } catch (error) {
+      console.error("Signup error:", error);
     }
-
-    await addData(`users/${updatedUser.uid}`, {
-      email: signupEmail,
-      photoURL: newURL || "",
-      displayName: name,
-    });
-
-    setOpen(false);
-  } catch (error) {
-    console.error("Signup error:", error);
-  }
-};
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

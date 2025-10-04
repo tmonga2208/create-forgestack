@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { onAuthStateChanged, User as FirebaseUser } from 'firebase/auth';
 import { auth } from '../lib/firebase';
-import { getData } from '@/hooks/useDB';
+import { getData } from '../hooks/useDB';
 
 interface User {
   uid: string;

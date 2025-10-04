@@ -4,7 +4,7 @@ import { Anton } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../context/theme-context";
 import { UserProvider } from "../context/usercontext";
-import { ImageProvider } from "@/context/imagekitContext";
+import { ImageProvider } from "../context/imagekitContext";
 
 const antonFont = Anton({
   variable: "--font-anton",

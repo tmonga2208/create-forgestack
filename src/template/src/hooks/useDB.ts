@@ -1,5 +1,5 @@
-import {collection, doc, setDoc, getDoc, deleteDoc, getDocs } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { collection, doc, setDoc, getDoc, deleteDoc, getDocs } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 interface FirebaseResult<T = void> {
   success: boolean;
@@ -10,7 +10,7 @@ interface FirebaseResult<T = void> {
 
 const addData = async <T extends Record<string, unknown>>(collectionPath: string, data: T): Promise<FirebaseResult> => {
   try {
-    const newDocRef = doc(collection(db, collectionPath)); 
+    const newDocRef = doc(collection(db, collectionPath));
     await setDoc(newDocRef, data);
     return { success: true };
   } catch (error) {
@@ -50,4 +50,4 @@ const deleteData = async (path: string): Promise<FirebaseResult> => {
   }
 };
 
-export { addData, getData, deleteData, db,getCollection };
+export { addData, getData, deleteData, db, getCollection };
