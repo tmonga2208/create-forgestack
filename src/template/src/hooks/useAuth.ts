@@ -4,7 +4,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 
 const provider = new GoogleAuthProvider();
 
-const handleSignIn = async (email: string, password: string) => { 
+const handleSignIn = async (email: string, password: string) => {
     try {
         await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
@@ -18,7 +18,7 @@ const handleSignUp = async (email: string, password: string) => {
         console.error(error);
     }
 }
-const handleLogout = async () => { 
+const handleLogout = async () => {
     try {
         await signOut(auth);
     } catch (error) {
@@ -26,7 +26,7 @@ const handleLogout = async () => {
     }
 }
 
-const handleGoogleAuth = async () => { 
+const handleGoogleAuth = async () => {
     try {
         await signInWithPopup(auth, provider);
     } catch (error) {
@@ -34,4 +34,4 @@ const handleGoogleAuth = async () => {
     }
 }
 
-export { handleSignIn, handleLogout, handleGoogleAuth ,handleSignUp};
+export { handleSignIn, handleLogout, handleGoogleAuth, handleSignUp };

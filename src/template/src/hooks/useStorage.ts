@@ -39,4 +39,4 @@ const deleteFile = async (storage: Storage, path: string): Promise<StorageResult
   }
 };
 
-export {storage, uploadFile, getFileURL, deleteFile };
+export { storage, uploadFile, getFileURL, deleteFile };
