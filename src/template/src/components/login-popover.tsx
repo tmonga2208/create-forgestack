@@ -51,6 +51,7 @@ export default function AuthDialog() {
       }
 
       await addData(`users/${updatedUser.uid}`, {
+        createdAt: new Date(),
         email: signupEmail,
         photoURL: newURL || "",
         displayName: name,

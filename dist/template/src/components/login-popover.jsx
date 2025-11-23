@@ -40,6 +40,7 @@ export default function AuthDialog() {
                 newURL = fileURLResult.data || "";
             }
             await addData(`users/${updatedUser.uid}`, {
+                createdAt: new Date(),
                 email: signupEmail,
                 photoURL: newURL || "",
                 displayName: name,

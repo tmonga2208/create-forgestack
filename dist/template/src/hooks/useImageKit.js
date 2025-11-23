@@ -7,11 +7,7 @@ const useImageKit = () => {
         if (!publicKey) {
             throw new Error("ImageKit public key is not defined in environment variables.");
         }
-        // Never expose your private key in client-side code. If you don't have a private key
-        // available on the server, instruct the caller to use a server-side upload endpoint.
         if (!privateKey) {
-            // If there's no private key available in the client, POST the file to a server
-            // endpoint which can safely use the private key to forward the upload to ImageKit.
             try {
                 const forwardForm = new FormData();
                 forwardForm.append('file', file);
@@ -34,8 +30,6 @@ const useImageKit = () => {
         formData.append("file", file);
         formData.append("fileName", file.name || "upload");
         try {
-            // ImageKit expects authentication using the private key. This code will only run
-            // if a privateKey is present (note: exposing privateKey in client code is insecure).
             const basicAuth = typeof btoa === "function"
                 ? `Basic ${btoa(`${privateKey}:`)}`
                 : `Basic ${Buffer.from(`${privateKey}:`).toString("base64")}`;

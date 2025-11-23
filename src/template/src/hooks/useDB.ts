@@ -1,5 +1,5 @@
 import { collection, doc, setDoc, getDoc, deleteDoc, getDocs, Timestamp } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { db } from "../lib/firebase";
 
 interface FirebaseResult<T = void> {
   success: boolean;
